@@ -3,8 +3,14 @@
 FILES_TO_CHECK=$(git status | grep -e '\#.*\(modified\|new file\)'| grep ".php" | awk '{print $NF}')
 ERRORS=""
 
+echo -e "\n=============="
+echo -e "= PHP pre commit verification"
+echo -e "=============="
+
+
+
 for FILE in $FILES_TO_CHECK; do
-	echo -ne "Checking \e[01;35m$FILE\e[00m..."
+	echo -ne "Checking \e[01;33m$FILE\e[00m..."
 	ERROR=$(php -l $PWD/$FILE 2>&1 | grep "PHP Parse error")
 	if [ "$ERROR" == "" ]; then
 		echo -e "\e[00;34mOK\e[00m"
