@@ -4,7 +4,7 @@ FILES_TO_CHECK=$(git status | grep -e '\#.*\(modified\|new file\)'| grep ".php" 
 ERRORS=""
 
 for FILE in $FILES_TO_CHECK; do
-	echo -ne "Checking \e[01;32m$FILE\e[00m..."
+	echo -ne "Checking \e[01;35m$FILE\e[00m..."
 	ERROR=$(php -l $PWD/$FILE 2>&1 | grep "PHP Parse error")
 	if [ "$ERROR" == "" ]; then
 		echo -e "\e[00;34mOK\e[00m"
