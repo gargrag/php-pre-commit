@@ -1,0 +1,25 @@
+#!/bin/bash
+
+FILES_TO_CHECK=$(git status | grep -e '\#.*\(modified\|new file\)'| grep ".php" | awk '{print $NF}')
+ERRORS=""
+
+for FILE in $FILES_TO_CHECK; do
+	echo -ne "Checking \e[01;32m$FILE\e[00m..."
+	ERROR=$(php -l $PWD/$FILE 2>&1 | grep "PHP Parse error")
+	if [ "$ERROR" == "" ]; then
+		echo -e "\e[00;34mOK\e[00m"
+	else
+		echo -e "\e[00;31mERROR\e[00m"
+		ERRORS="$ERRORS\n$FILE => $ERROR"
+	fi
+done
+
+if [ "$ERRORS" == "" ]; then
+	echo -e "\e[01;32mAll seems to be OK... proceed to commit...\e[00m"
+else
+	echo -e "\e[00;31mErrors where encountered processing files.\e[00m"
+	echo -e $ERRORS
+	echo "=========="
+	echo "Exiting"
+	exit 1
+fi
