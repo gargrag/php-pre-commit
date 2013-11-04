@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILES_TO_CHECK=$(git status | grep -e '\#.*\(modified\|new file\)'| grep ".php" | awk '{print $NF}')
+FILES_TO_CHECK=$(git status | grep -e '\#.*\(modified\|new file\)'| egrep "(.php|.module|.inc|.install)" | awk '{print $NF}')
 ERRORS=""
 
 echo -e "\n=============="
