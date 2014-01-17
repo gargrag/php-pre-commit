@@ -11,7 +11,7 @@ echo -e "=============="
 
 for FILE in $FILES_TO_CHECK; do
 	echo -ne "Checking \e[01;33m$FILE\e[00m..."
-	ERROR=$(php -l $PWD/$FILE 2>&1 | grep "PHP Parse error")
+	ERROR=$(php -l $FILE 2>&1 | grep "Parse error")
 	if [ "$ERROR" == "" ]; then
 		echo -e "\e[00;34mOK\e[00m"
 	else
